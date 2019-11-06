@@ -5,12 +5,16 @@ spring:
     stream:
       rocketmq:
         binder:
-          namesrv-addr: 106.12.189.101:9876
+          namesrv-addr: localhost:9876
         bindings:
           input: {consumer.orderly: true}
       bindings:
-        input: {destination: test-topic, content-type: text/plain, group: test-group, consumer.maxAttempts: 1}
-
+        input: {destination: test-topic, content-type: text/plain, group: test-group, consumer.maxAttempts: 1 ,consumer.orderly: true}
+        input1: {destination: test-topic1, content-type: text/plain, group: test-group1, consumer.maxAttempts: 1,consumer.orderly: true}
+        input2: {destination: test-topic1, content-type: text/plain, group: test-group1, consumer.maxAttempts: 1,consumer.orderly: true,consumer.tags: tagStr,consumer.concurrency: 20}
+        input3: {destination: test-topic1, content-type: text/plain, group: test-group3, consumer.maxAttempts: 1,consumer.tags: tagObj}
+        input4: {destination: test-topic2_TransactionTopic, content-type: text/plain, group: transaction-group, consumer.maxAttempts: 1}
+        input5: {destination: pull-topic, content-type: text/plain, group: pull-topic-group, consumer.maxAttempts: 1}
 server:
   port: 9094
 

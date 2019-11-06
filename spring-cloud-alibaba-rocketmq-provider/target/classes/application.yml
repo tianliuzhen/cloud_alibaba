@@ -6,15 +6,14 @@ spring:
       rocketmq:
         binder:
           # RocketMQ 服务器地址
-          namesrv-addr: 106.12.189.101:9876
+          namesrv-addr: 127.0.0.1:9876
       bindings:
         # 这里是个 Map 类型参数，{} 为 YAML 中 Map 的行内写法
-        output: {destination: test-topic, content-type: application/json}
-        output1: {destination: test-topic1, content-type: application/json}
-        output2: {destination: test-topic2, content-type: application/json}
-  batch:
-    job:
-      enabled: false
+        output:  {destination: test-topic, content-type: application/json}
+        output1: {destination: test-topic1, content-type: application/json,producer.group: binder-group,producer.sync: true}
+        output2: {destination: test-topic2_TransactionTopic, content-type: application/json,producer.transactional: true,producer.group: myTxProducerGroup}
+        output3: {destination: pull-topic, content-type: text/plain,producer.group: pull-binder-group}
+
 server:
   port: 9096
 
@@ -23,3 +22,5 @@ management:
     web:
       exposure:
         include: '*'
+    health:
+      show-details: always
