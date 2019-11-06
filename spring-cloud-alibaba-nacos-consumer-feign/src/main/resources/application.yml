@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: nacos-consumer-feign
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+#        这里是 与 sentenel 交互的  客户端 端口 不修改也能注册，会自动帮你在端口号上 + 1；
+        port: 8181
+        dashboard: 127.0.0.1:8181
+server:
+  port: 9092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+feign:
+  sentinel:
+    enabled: true
